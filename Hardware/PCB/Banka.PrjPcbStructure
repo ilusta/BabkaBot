@@ -1,0 +1,4 @@
+Record=TopLevelDocument|FileName=IO.SchDoc|SheetNumber= 
+Record=NoMainPathDocument|SourceDocument=IO.SchDoc|FileName=Main sheet.SchDoc|SheetNumber= 
+Record=NoMainPathDocument|SourceDocument=IO.SchDoc|FileName=Motor driver.SchDoc|SheetNumber= 
+Record=NoMainPathDocument|SourceDocument=IO.SchDoc|FileName=Sensors.SchDoc|SheetNumber= 
