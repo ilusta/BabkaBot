@@ -1,0 +1,1 @@
+Software for "Banka" robot used as moving obstacle in robotics competitions
