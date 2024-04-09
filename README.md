@@ -1,12 +1,14 @@
-# Software for Banka robot
-"Banka" robots are used as moving obstacles in robotics competitions
+# Banka robot
+This repository contains frimware, PCB design and 3D models for creating Banka robot
 
-"Banka" project can be found here:
-https://github.com/ilusta/Banka
+"Banka" robots are used as moving obstacles in robotics competitions. This obstacles follow black line, changing direction at each white point. Competitor`s robots should follow the same black line from start to finish without touching obstacles. The fastest robot to do so wins.
 
-This is frimware of 1.0 version for 1.0 version of PCB
+This is 1.0 version
 
-This frimware is written for ATmega 328p with Arduino Nano bootloader
+Frimware is written for ATmega 328p with Arduino Nano bootloader
+
+![Banka obstacle on the line](https://github.com/ilusta/Banka-Software/assets/53097569/fada17c3-299c-468b-aab5-f4e726ebad1e)
+![Robot itself](https://github.com/ilusta/Banka-Software/assets/53097569/6df76e79-b856-4f35-95cc-2d21a84091d1)
 
 ## Instruction
 Code can be compiled and uploaded using Arduino IDE. Select Arduino Nano as board type and upload using devug header on the PCB.
