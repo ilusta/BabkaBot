@@ -1,0 +1,23 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: Banka.PcbDoc   10.04.2024  10:13:08
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : Banka-RoundHoles.TXT
+ASCII SlotHoles File : Banka-SlotHoles.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      0.3mm (12mil)                                             Round             935       PTH        3706.35mm (145.92inch)
+T2      0.5mm (20mil)                                             Round             9         PTH        32.83mm (1.29inch)
+T3      0.8mm (31mil)                                             Slot              4         PTH        30.74mm (1.21inch)
+T4      1mm (39mil)                                               Round             24        PTH        223.68mm (8.81inch)
+T5      1.3mm (51mil)                                             Round             8         PTH        140.00mm (5.51inch)
+T6      3.2mm (126mil)                                            Round             8         PTH        317.11mm (12.48inch)
+T7      0.6mm (24mil)                                             Round             2         NPTH       11.00mm (0.43inch)
+T8      1mm (39mil)                                               Round             6         NPTH       162.97mm (6.42inch)
+T9      2.5mm (98mil)                                             Round             12        NPTH       177.63mm (6.99inch)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              1008
+
+Total Processing Time (hh:mm:ss) : 00:00:00
