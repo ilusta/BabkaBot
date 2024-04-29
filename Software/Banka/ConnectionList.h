@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 
-#define VIN_SENSE   A2
+#define VIN_SENSE   A6
 
 #define LED_ERROR   2
 #define LED_WORK    3
@@ -12,11 +12,12 @@
 #define LEDARR_CLK      9
 
 #define BUTTON_START_STOP   4
-#define BUTTON_INC    12
-#define BUTTON_DEC    13
+#define BUTTON_INC    13
+#define BUTTON_DEC    A3
 
-#define MOTOR1_PIN1 5
-#define MOTOR1_PIN2 6
+#define MOTOR_FAULT_PIN 12
+#define MOTOR1_PIN1 6
+#define MOTOR1_PIN2 5
 #define MOTOR2_PIN1 10
 #define MOTOR2_PIN2 11
 
@@ -25,4 +26,4 @@
 #define S3  A1
 #define S4  A5
 #define S5  A4
-#define S6  A3
+#define S6  A2

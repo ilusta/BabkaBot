@@ -2,7 +2,8 @@
 #include "Useful.h"
 #include <EEPROM.h>
 
-#define K   0.2
+#define KP   0.15
+#define KD   7.0
 #define GREY_TRESHOLD   400
 
 #define STATE_WAITING false
@@ -32,7 +33,9 @@ void loop() {
   bool width = EEPROM.read(1);
   bool direction = 1;
   long long dirTimer = millis();
+  long long timer = millis();
   int val = 0;
+  int err = 0, errOld = 0;
   int u = 0;
   int sp = 0;
 
@@ -40,17 +43,17 @@ void loop() {
 
     bool spFlag = false;
     if (robot.buttonInc.isClicked()) {
-      speed += 10;
+      speed ++;
       spFlag = true;
-      if (speed > 80) speed = 80;
+      if (speed > 8) speed = 8;
     }
     if (robot.buttonDec.isClicked()) {
-      speed -= 10;
+      speed --;
       spFlag = true;
-      if (speed < 10) speed = 10;
+      if (speed < 1) speed = 1;
     }
     if (spFlag) EEPROM.write(0, speed);
-    robot.ledArr.show(speed / 10);
+    robot.ledArr.show(speed);
 
     if (!robot.buttonStartStop.isPressed()) widthChangeTimer = millis();
     if (millis() - widthChangeTimer > 10000) {
@@ -81,11 +84,12 @@ void loop() {
       else val = robot.getSensor(1);
     }
 
-    u = (val - GREY_TRESHOLD) * K;
-    if (abs(u) > 50) u = sign(u) * 50;
-    sp = map(speed, 10, 80, 20, 120);
-
-
+    err = val - GREY_TRESHOLD;
+    u = err*KP + (err - errOld)*KD/(millis() - timer);
+    errOld = err;
+    timer = millis();
+    if (abs(u) > 100) u = sign(u) * 100;
+    sp = map(speed, 1, 8, 40, 180);
 
 
     if (state) {
@@ -95,8 +99,9 @@ void loop() {
       else robot.setMotors(-sp - u, -sp + u);
 
 
-      if ((!direction && (robot.getSensor(0) < GREY_TRESHOLD) || direction && (robot.getSensor(3) < GREY_TRESHOLD)) && millis() - dirTimer > 2000) {
+      if ((!direction && (robot.getSensor(0) < GREY_TRESHOLD) || direction && (robot.getSensor(3) < GREY_TRESHOLD)) && millis() - dirTimer > 1000) {
         direction = !direction;
+        errOld = 0;
         dirTimer = millis();
       }
 
@@ -114,6 +119,7 @@ void loop() {
     Serial.print("  Speed: " + String(sp));
     Serial.print("  Val: " + String(val));
     Serial.print("  U: " + String(u));
+    Serial.print("  Error: " + String(robot.getError()));
 
     Serial.print("  Sensors: ");
     for (int i = 0; i < 6; i++)

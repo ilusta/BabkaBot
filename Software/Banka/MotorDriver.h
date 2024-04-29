@@ -5,7 +5,7 @@
 #include "Useful.h"
 
 
-#define ACCELERATION 1
+#define ACCELERATION 3
 
 
 class MotorDriver{
@@ -38,8 +38,10 @@ void MotorDriver::setSpeed(int speed){
 
 void MotorDriver::update(){
 
+    if(abs(speed - prevSpeed) < ACCELERATION*2) prevSpeed = speed;
     prevSpeed = prevSpeed + sign(speed - prevSpeed) * (millis() - timer) * ACCELERATION;
     int sp = prevSpeed;
+    //int sp = speed;
     timer = millis(); 
   
     bool dir = true;

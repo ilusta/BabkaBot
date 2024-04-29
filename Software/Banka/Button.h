@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 
-#define TIMEOUT_MS 50
+#define TIMEOUT_MS 10
 
 class Button{
     public:

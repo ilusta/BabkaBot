@@ -7,11 +7,17 @@
 #include "LedArray.h"
 #include "MotorDriver.h"
 
-#define WRONG_VOLTAGE_MAX_TIME 1000
+#define WRONG_VOLTAGE_MAX_TIME  1000
+
+#define VCC_SENSE_COEF  0.007102
+
+
+#define VOLTAGE_ERROR   0
+#define DRIVER_ERROR    1
 
 class Robot{
     private:
-    bool error = false;
+    uint8_t error = false;
     double voltage;
     long long wrongVoltageTimer;
     int sensors[6] = {S1, S2, S3, S4, S5, S6};
@@ -31,7 +37,7 @@ class Robot{
     void wait(int);
     int getSensor(int);
     void setMotors(int, int);
-    bool getError();
+    uint8_t getError();
     double getVoltage();
 };
 
@@ -44,11 +50,12 @@ Robot::Robot(){
     //Sensors
     for(int i = 0; i < 6; i++)
         pinMode(sensors[i], INPUT);
+
     //Voltage sense
     pinMode(VIN_SENSE, INPUT);
 
-    //UART
-    //Serial.begin(115200);
+    //Motor driver fault pin
+    pinMode(MOTOR_FAULT_PIN, INPUT_PULLUP);
 }
 
 void Robot::wait(int delayTime){
@@ -63,17 +70,29 @@ void Robot::wait(int delayTime){
 
         for(int i = 0; i < 6; i++)
             sensorsVal[i] = analogRead(sensors[i]);
+ 
+        long result;
+        // Read 1.1V reference against AVcc
+        ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
+        delay(2); // Wait for Vref to settle
+        ADCSRA |= _BV(ADSC); // Convert
+        while (bit_is_set(ADCSRA,ADSC));
+        result = ADCL;
+        result |= ADCH<<8;
+        result = 1126400L / result; // Back-calculate AVcc in mV
+        voltage = result / 1000.0;
 
-        voltage = analogRead(VIN_SENSE)*0.021484375;
-        if(voltage > 8 && voltage < 9.5) wrongVoltageTimer = millis();
+        //voltage = analogRead(VIN_SENSE)*VCC_SENSE_COEF;
+        if(voltage > 4.5 && voltage < 5.5) wrongVoltageTimer = millis();
         
-        if(millis() - wrongVoltageTimer > WRONG_VOLTAGE_MAX_TIME)error = true;
-        else error = false;
+        error &= ~(1 << VOLTAGE_ERROR);
+        if(millis() - wrongVoltageTimer > WRONG_VOLTAGE_MAX_TIME) error |= (1 << VOLTAGE_ERROR);
 
-        delay(1);
+        error &= ~(1 << DRIVER_ERROR);
+        if(!digitalRead(MOTOR_FAULT_PIN)) error |= (1 << DRIVER_ERROR);
+
+        digitalWrite(LED_ERROR, error);
     } while(millis() - timer < delayTime);
-
-    digitalWrite(LED_ERROR, error);
 }
 
 int Robot::getSensor(int index){
@@ -81,12 +100,11 @@ int Robot::getSensor(int index){
 }
 
 void Robot::setMotors(int speed1, int speed2){
-    if(error) return;
     motor1.setSpeed(speed1);
     motor2.setSpeed(-speed2);
 }
 
-bool Robot::getError(){
+uint8_t Robot::getError(){
     return error;
 }
 
