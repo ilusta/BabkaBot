@@ -3,7 +3,7 @@ This repository contains frimware, PCB design and 3D models for creating Banka r
 
 "Banka" robots are used as moving obstacles in robotics competitions. This obstacles follow black line, changing direction at each white point. Competitor`s robots should follow the same black line from start to finish without touching obstacles. The fastest robot to do so wins.
 
-This is 1.0 version
+Currently working on 2.0 version
 
 Frimware is written for ATmega 328p with Arduino Nano bootloader
 
