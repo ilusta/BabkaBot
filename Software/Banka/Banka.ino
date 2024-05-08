@@ -3,7 +3,7 @@
 #include <EEPROM.h>
 
 #define KP   0.15
-#define KD   7.0
+#define KD   5.0
 #define GREY_TRESHOLD   400
 
 #define STATE_WAITING false
