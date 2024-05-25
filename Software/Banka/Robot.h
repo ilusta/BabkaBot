@@ -36,6 +36,7 @@ class Robot{
     Robot();
     void wait(int);
     int getSensor(int);
+    void stopMotors();
     void setMotors(int, int);
     uint8_t getError();
     double getVoltage();
@@ -102,6 +103,11 @@ int Robot::getSensor(int index){
 void Robot::setMotors(int speed1, int speed2){
     motor1.setSpeed(speed1);
     motor2.setSpeed(-speed2);
+}
+
+void Robot::stopMotors(){
+    motor1.stop();
+    motor2.stop();
 }
 
 uint8_t Robot::getError(){
