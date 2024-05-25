@@ -17,6 +17,7 @@ class MotorDriver{
 
     public:
     MotorDriver(int, int);
+    void stop();
     void setSpeed(int);
     void update();
 };
@@ -34,6 +35,13 @@ MotorDriver::MotorDriver(int pin1, int pin2){
 
 void MotorDriver::setSpeed(int speed){
   this->speed = speed;
+}
+
+void MotorDriver::stop(){
+  speed = 0;
+  prevSpeed = 0;
+  analogWrite(pin1, 0);
+  analogWrite(pin2, 0);
 }
 
 void MotorDriver::update(){
