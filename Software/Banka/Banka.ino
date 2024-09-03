@@ -159,7 +159,7 @@ void loop() {
 void calibration(){
   Serial.println("Start calibration");
 
-  robot.setMotors(150, 0);
+  robot.setMotors(150, -150);
   uint16_t minVal[6];
   uint16_t maxVal[6];
   for(int i = 0; i < 6; i++){
