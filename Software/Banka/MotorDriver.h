@@ -40,8 +40,8 @@ void MotorDriver::setSpeed(int speed){
 void MotorDriver::stop(){
   speed = 0;
   prevSpeed = 0;
-  analogWrite(pin1, 0);
-  analogWrite(pin2, 0);
+  digitalWrite(pin1, 1);
+  digitalWrite(pin2, 1);
 }
 
 void MotorDriver::update(){
